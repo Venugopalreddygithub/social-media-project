@@ -12,7 +12,6 @@ class Profile(models.Model):
     
     class Meta:
         db_table = "profile"
-    
 
 class Post(models.Model):
     user = models.ForeignKey(User, related_name='post', on_delete=models.CASCADE)
