@@ -1,16 +1,9 @@
 {% extends "base.html" %}
 
 {% block content %}
+ <h1 style="text-align: center;margin-top:12px; margin-bottom: 12px">Sign IN Page </h1>
 
- <h1 style="text-align: center;margin-top:12px; margin-bottom: 12px">Sign Up Page </h1>
- {% if error %}
- <div class="alert alert-danger text-center" role="alert" style="width:50%;margin: 0 auto;">
-  {{error_msg}}
-</div>
- {% endif %}
-
- <form style="width:50%;margin: 0 auto;" method="POST" action="{% url 'sign_up_view' %}">
-    {% csrf_token %}
+ <form style="width:50%;margin: 0 auto;">
     <div class="mb-3">
       <label for="email" class="form-label">Email address</label>
       <input type="email" class="form-control" id="email" name="email" >
