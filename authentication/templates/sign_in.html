@@ -3,11 +3,19 @@
 {% block content %}
  <h1 style="text-align: center;margin-top:12px; margin-bottom: 12px">Sign IN Page </h1>
 
- <form style="width:50%;margin: 0 auto;">
-    <div class="mb-3">
-      <label for="email" class="form-label">Email address</label>
-      <input type="email" class="form-control" id="email" name="email" >
-    </div>
+
+{% if  request.user.is_authenticated %}
+  <div class="alert alert-warning" role="alert">
+    Hey It seems you are already logged in!
+  </div>
+{% else %}
+<form style="width:50%;margin: 0 auto;" method="POST" action="{% url 'sign_in_view' %}">
+  {% csrf_token %}
+  {% if error %}
+  <div class="alert alert-danger text-center" role="alert" style="width:50%;margin: 0 auto;">
+   {{error_msg}}
+ </div>
+  {% endif %}
     <div class="mb-3">
         <label for="username" class="form-label">Username</label>
         <input type="text" class="form-control" id="username" name="username">
@@ -18,6 +26,7 @@
     </div>
     <button type="submit" class="btn btn-primary">Submit</button>
   </form>
+{% endif %}
 
 {% endblock  %}
 

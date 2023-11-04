@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect 
 from django.http import HttpResponse, JsonResponse 
 from authentication.models import User 
 from django.contrib.auth.models import auth 
@@ -11,6 +11,7 @@ def sign_up_view(request):
     if request.method == "GET":
         print(request.user)
         print(request.user.is_authenticated)
+        print(request.user.username)
         
         return render(request, 'sign_up.html')
     else: #POST 
@@ -40,10 +41,21 @@ def sign_up_view(request):
         return render(request, page_name)
  
 def sign_in_view(request):
+    page_name = 'sign_in.html'
     if request.method == "GET":
         return render(request, 'sign_in.html')
+    else: #POST 
+        username = request.POST['username']
+        password = request.POST['password']
+        user = auth.authenticate(username=username, password=password)
+        if not user:
+            return render(request, page_name, context={"error": True, "error_msg": "Invalid Credentials"}) 
+        Profile.objects.get_or_create(user=user)
+        auth.login(request, user)
+        return render(request, page_name)
 
 def sign_out_view(request):
-    pass 
+    auth.logout(request)
+    return redirect('sign_in_view')
 
 
