@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div style="display:flex;flex-direction:column;justify-content: center; align-items: center">
+         <h1>Profile Page</h1> <br>
+         <p>Email: {{user.email}}<p>
+            <h5>Posts made : {{posts_made}} <h5> 
+            <h5>likes made : {{likes_made}} <h5>
+            <h5>likes received : {{likes_received}} <h5> 
+    </div>
+
+{% endblock %}

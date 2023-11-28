@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect 
 from media_app.models import Post, LikePost
+from authentication.models import User 
 from django.contrib.auth.decorators import login_required 
 
 # Create your views here.
@@ -34,3 +35,17 @@ def like_post(request, post_id):
     )
     
     return redirect('index')
+
+@login_required(login_url='sign_in_view')
+def profile_view(request, username):
+    user = User.objects.get(username=username)
+    posts_made = user.post.all().count()
+    likes_made = user.like_post.all().count()
+    likes_received = LikePost.objects.filter(post__user=user).count()
+    data = {
+        "posts_made": posts_made,
+        "likes_made": likes_made,
+        "likes_received": likes_received,
+    }
+    
+    return render(request, 'profile.html', data)

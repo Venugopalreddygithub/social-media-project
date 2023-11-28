@@ -30,7 +30,7 @@
     {% endif %}
     <div class="card-body">
       <p class="card-text">{{post.caption}}</p>
-      <span class="badge text-bg-dark">Posted_by: {{post.user.username}}</span>
+      <a class="badge text-bg-dark" href="/profile-view/{{post.user.username}}">Posted_by: {{post.user.username}}</a>
       <span class="badge text-bg-dark">Posted_at: {{post.created_at}}</span>
       {% if request.user.id != post.user.id %}
       <form method="POST" action="{% url 'like_post' post.id %}">
