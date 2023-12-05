@@ -1,8 +1,33 @@
 {% extends "base.html" %}
 
 {% block content %}
+
+    {% if request.user.username == user.username %}
+        {% if user.profile.image and user.profile.image.url %}
+        <div class="text-center">
+        <img src={{user.profile.image.url}} style="border-radius:50px;height:160px;width:100px;margin: 0 auto;" />
+        </div>
+        {% endif %}
+    <form method="POST" enctype="multipart/form-data" action="{% url 'upload_profile' %}">
+        {% csrf_token %}
+        <div class="input-group text-center" style="width: 50%; margin: 0 auto">
+            <input type="file" required class="form-control" id="profile_image" name="profile_image" required  aria-label="Upload" accept=".jpeg, .jpg, .png" >
+        </div>
+        <div style="display:flex;flex-direction:row;justify-content: center;">
+            {% if user.profile.image and user.profile.image.url %}
+                <button type="submit" class="btn btn-dark">Update Profile Image</button>
+            {% else %}
+            <button type="submit" class="btn btn-dark">Upload Profile Image</button>
+            {% endif %}
+        </div>
+    </form>
+    {% endif %} 
+
+
+
     <div style="display:flex;flex-direction:column;justify-content: center; align-items: center">
          <h1>Profile Page</h1> <br>
+         <p>Name: {{user.username}} <p>
          <p>Email: {{user.email}}<p>
             <h5>Posts made : {{posts_made}} <h5> 
             <h5>likes made : {{likes_made}} <h5>

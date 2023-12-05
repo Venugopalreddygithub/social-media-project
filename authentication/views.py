@@ -48,6 +48,7 @@ def sign_in_view(request):
     else: #POST 
         username = request.POST['username']
         password = request.POST['password']
+        print(username, password)
         user = auth.authenticate(username=username, password=password)
         if not user:
             return render(request, page_name, context={"error": True, "error_msg": "Invalid Credentials"}) 

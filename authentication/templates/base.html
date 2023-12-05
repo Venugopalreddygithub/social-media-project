@@ -15,7 +15,7 @@
           </button>
           {% if request.user.is_authenticated %}
           <div style="display:flex;">
-            <p>Hello {{request.user.username}} </P>
+            <a href="/profile-view/{{request.user.username}}/">Hello, {{request.user.username}} </a>
             <a style="margin-left:12px;" class="btn btn-outline-primary" href="/sign-out/">Sign Out</a>
             </div>
           {% else %}
