@@ -6,8 +6,14 @@ from django.contrib.auth.decorators import login_required
 # Create your views here.
 def index_view(request):
     page_name = 'index.html'
+    user = request.user
+    if request.user.is_authenticated:
+        already_liked_posts= list(set(LikePost.objects.filter(user=user).values_list('post_id', flat=True)))
+    else:
+        already_liked_posts = [] 
     data = {
-        "posts" : Post.objects.all().order_by('-created_at')
+        "already_liked_posts": already_liked_posts,
+        "posts" : Post.objects.all().order_by('-created_at'),
     }
     return render(request, page_name, data)
 
